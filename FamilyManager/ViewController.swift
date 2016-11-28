@@ -13,8 +13,8 @@ import FontAwesome_swift
 class ViewController: UIViewController {
 
     lazy var familyCountLabel = UILabel()
-    lazy var addMemberButton = FMFontButton(fsize: 20, iname: "fa-plus")
-
+    lazy var timer = FMTimerView(backgroundColor: UIColor.white)
+    
     let FCHEIGHT: CGFloat = 50
     let FCWIDTH: CGFloat = 200
     let ABUTTONWIDTH: CGFloat = 60
@@ -31,15 +31,35 @@ class ViewController: UIViewController {
             make.width.equalTo(FCWIDTH)
             make.center.equalTo(view)
         }
-        view.addSubview(addMemberButton)
-        addMemberButton.backgroundColor = .blue
-        addMemberButton.layer.cornerRadius = ABUTTONWIDTH / 2
-        addMemberButton.snp.makeConstraints{ (make) -> Void in
-            make.height.width.equalTo(ABUTTONWIDTH)
-            make.top.equalTo(familyCountLabel.snp.bottom).offset(10)
-            make.centerX.equalTo(familyCountLabel)
+        view.addSubview(timer)
+        timer.snp.makeConstraints{ (make) -> Void in
+            make.height.equalTo(200)
+            make.width.equalTo(200)
+            make.center.equalTo(view)
         }
-        addMemberButton.addTarget(self, action: #selector(self.addFamilyMember), for: .touchUpInside)
+        timer.progressMax = 10
+        addNavBar()
+        addToolbar()
+        Timer.scheduledTimer(withTimeInterval: 0.005, repeats: true){tm in
+            self.timer.progress = self.timer.progress + 0.005
+            self.timer.setNeedsDisplay()
+        }
+    }
+    
+    func addToolbar(){
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 20))
+        view.addSubview(toolbar)
+    }
+    
+    func addNavBar(){
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: view.frame.size.width, height: 44))
+        navigationBar.backgroundColor = UIColor.blue
+        let title = UINavigationItem()
+        title.title = "Family Manager"
+        let addFamilyMember = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(ViewController.addFamilyMember))
+        title.rightBarButtonItem = addFamilyMember
+        navigationBar.items = [title]
+        view.addSubview(navigationBar)
     }
 
     func addFamilyMember(){
