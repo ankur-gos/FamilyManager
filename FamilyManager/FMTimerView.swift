@@ -17,7 +17,8 @@ class FMTimerView: UIView{
     
     var progress: CGFloat = 0
     var progressMax: CGFloat = 100
-    var timer = UILabel()
+    var timer = FMTimerLabel()
+    var timerOn = false
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -30,20 +31,39 @@ class FMTimerView: UIView{
             make.height.equalTo(40)
             make.center.equalTo(self)
         }
-        timer.text = "06:12"
     }
     
-    convenience init(backgroundColor: UIColor){
+    convenience init(backgroundColor: UIColor, timeSet: Int){
         self.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         self.backgroundColor = backgroundColor
+        timer.secondsLeft = timeSet
+    }
+    
+    func updateTimer(){
+        timer.secondsLeft = timer.secondsLeft - 1
+        if timer.secondsLeft == 0{
+             NotificationCenter.default.post(name: NSNotification.Name.init("timerFire"), object: self)
+        }
     }
     
     override func draw(_ rect: CGRect) {
         
         if let context = UIGraphicsGetCurrentContext(){
-            drawProgress(context: context, boundedBy: rect, progress: progress)
+            if timerOn{
+                drawProgress(context: context, boundedBy: rect, progress: progress)
+                timer.textColor = UIColor.black
+            } else{
+                drawNoTimer(context: context, boundedBy: rect)
+                timer.text = "Tap to set feeding timer"
+                timer.textColor = UIColor.white
+            }
         }
         super.draw(rect)
+    }
+    
+    func drawNoTimer(context: CGContext, boundedBy rect: CGRect){
+        context.setFillColor(UIColor.cyan.cgColor)
+        context.fill(rect)
     }
     
     func drawProgress(context: CGContext, boundedBy rect: CGRect, progress: CGFloat) {

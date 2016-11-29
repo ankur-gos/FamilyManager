@@ -34,6 +34,9 @@
 		929310D11DC418C60003E28F /* FamilyManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929310D01DC418C60003E28F /* FamilyManagerTests.swift */; };
 		929310DC1DC418C60003E28F /* FamilyManagerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929310DB1DC418C60003E28F /* FamilyManagerUITests.swift */; };
 		929310EA1DC41AB50003E28F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 929310E91DC41AB50003E28F /* GoogleService-Info.plist */; };
+		92C1A00F1DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1A00E1DED6D9F00DCFA09 /* FMTimerLabel.swift */; };
+		92C1A0101DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1A00E1DED6D9F00DCFA09 /* FMTimerLabel.swift */; };
+		92C1A0111DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1A00E1DED6D9F00DCFA09 /* FMTimerLabel.swift */; };
 		C7B539EC8D8AB1F62EDAA9CE /* Pods_FamilyManagerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD2980889D4233DEFFD8EB7 /* Pods_FamilyManagerUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +83,7 @@
 		929310DB1DC418C60003E28F /* FamilyManagerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyManagerUITests.swift; sourceTree = "<group>"; };
 		929310DD1DC418C60003E28F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		929310E91DC41AB50003E28F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		92C1A00E1DED6D9F00DCFA09 /* FMTimerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMTimerLabel.swift; sourceTree = "<group>"; };
 		98753DC1F05B6B24AC1E80CA /* Pods-FamilyManagerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FamilyManagerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FamilyManagerUITests/Pods-FamilyManagerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A4AA80ADB923E5BEA90A6E8B /* Pods_FamilyManagerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FamilyManagerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD2980889D4233DEFFD8EB7 /* Pods_FamilyManagerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FamilyManagerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +177,7 @@
 				58A88228BA63A7358E7A45B4 /* FMAddMemberController.swift */,
 				9263B1071DE95B0F006D0222 /* FMDatabase.swift */,
 				92332A221DEC18E40094D532 /* FMTimerView.swift */,
+				92C1A00E1DED6D9F00DCFA09 /* FMTimerLabel.swift */,
 			);
 			path = FamilyManager;
 			sourceTree = "<group>";
@@ -483,6 +488,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				929310BE1DC418C60003E28F /* ViewController.swift in Sources */,
+				92C1A00F1DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */,
 				9263B1081DE95B0F006D0222 /* FMDatabase.swift in Sources */,
 				92332A231DEC18E40094D532 /* FMTimerView.swift in Sources */,
 				929310BC1DC418C60003E28F /* AppDelegate.swift in Sources */,
@@ -499,6 +505,7 @@
 				929310D11DC418C60003E28F /* FamilyManagerTests.swift in Sources */,
 				58A88779571860611099D080 /* FMFontLabel.swift in Sources */,
 				58A88969850DE97BA38286CD /* FMFontButton.swift in Sources */,
+				92C1A0101DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */,
 				92332A241DEC18E40094D532 /* FMTimerView.swift in Sources */,
 				58A88DEC50D06CB4F0CA43B2 /* FMAddMemberController.swift in Sources */,
 				9263B1091DE95B0F006D0222 /* FMDatabase.swift in Sources */,
@@ -512,6 +519,7 @@
 				929310DC1DC418C60003E28F /* FamilyManagerUITests.swift in Sources */,
 				58A88B1CB59148A370C9682B /* FMFontLabel.swift in Sources */,
 				58A885608D7B952C4FA1A6E8 /* FMFontButton.swift in Sources */,
+				92C1A0111DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */,
 				92332A251DEC18E40094D532 /* FMTimerView.swift in Sources */,
 				58A88C6B404F51D00AA5C698 /* FMAddMemberController.swift in Sources */,
 				9263B10A1DE95B0F006D0222 /* FMDatabase.swift in Sources */,

@@ -13,13 +13,15 @@ import FontAwesome_swift
 class ViewController: UIViewController {
 
     lazy var familyCountLabel = UILabel()
-    lazy var timer = FMTimerView(backgroundColor: UIColor.white)
+    lazy var timer = FMTimerView(backgroundColor: UIColor.white, timeSet: 60)
     
     let FCHEIGHT: CGFloat = 50
     let FCWIDTH: CGFloat = 200
     let ABUTTONWIDTH: CGFloat = 60
 
     var familyCount = 0
+    var timer1: Timer?
+    var timer2: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,13 +39,37 @@ class ViewController: UIViewController {
             make.width.equalTo(200)
             make.center.equalTo(view)
         }
-        timer.progressMax = 10
+        timer.progressMax = 60
         addNavBar()
         addToolbar()
-        Timer.scheduledTimer(withTimeInterval: 0.005, repeats: true){tm in
-            self.timer.progress = self.timer.progress + 0.005
+        timer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.set)))
+        
+    }
+    
+    func set(_ sender: UITapGestureRecognizer){
+        timer.timerOn = true
+        timer.progress = 0
+        timer.timer.secondsLeft = 60
+        timer1 = Timer.scheduledTimer(withTimeInterval: 0.005, repeats: true){tm in
+            self.timer.progress = self.timer.progress + 0.01
             self.timer.setNeedsDisplay()
         }
+        timer2 = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){tm in
+            self.timer.updateTimer()
+            self.timer.setNeedsDisplay()
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.resetTimer), name: NSNotification.Name.init(rawValue: "timerFire"), object: self)
+    }
+    
+    func resetTimer(){
+        if let timer1 = timer1{
+            timer1.invalidate()
+        }
+        if let timer2 = timer2{
+            timer2.invalidate()
+        }
+        timer.timerOn = false
+        NotificationCenter.default.removeObserver(self)
     }
     
     func addToolbar(){
