@@ -14,9 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().barTintColor = UIColor.blue
+        UINavigationBar.appearance().barTintColor = FMColors.violet
         UINavigationBar.appearance().isTranslucent = false
-        UIToolbar.appearance().barTintColor = UIColor.blue
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+        UIToolbar.appearance().barTintColor = FMColors.violet
         UIToolbar.appearance().isTranslucent = false
         return true
     }

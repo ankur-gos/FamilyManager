@@ -28,12 +28,21 @@
 		927CAB541DC42AA900D4BDCC /* main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 927CAB531DC42AA900D4BDCC /* main.storyboard */; };
 		927CAB551DC42AA900D4BDCC /* main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 927CAB531DC42AA900D4BDCC /* main.storyboard */; };
 		927CAB561DC42AA900D4BDCC /* main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 927CAB531DC42AA900D4BDCC /* main.storyboard */; };
+		9288CBE91DF3F5A700CBDBE7 /* Colors in Resources */ = {isa = PBXBuildFile; fileRef = 9288CBE81DF3F5A700CBDBE7 /* Colors */; };
+		9288CBEA1DF3F5A700CBDBE7 /* Colors in Resources */ = {isa = PBXBuildFile; fileRef = 9288CBE81DF3F5A700CBDBE7 /* Colors */; };
+		9288CBEB1DF3F5A700CBDBE7 /* Colors in Resources */ = {isa = PBXBuildFile; fileRef = 9288CBE81DF3F5A700CBDBE7 /* Colors */; };
+		9288CBED1DF3F62400CBDBE7 /* FMColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9288CBEC1DF3F62400CBDBE7 /* FMColors.swift */; };
+		9288CBEE1DF3F62400CBDBE7 /* FMColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9288CBEC1DF3F62400CBDBE7 /* FMColors.swift */; };
+		9288CBEF1DF3F62400CBDBE7 /* FMColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9288CBEC1DF3F62400CBDBE7 /* FMColors.swift */; };
 		929310BC1DC418C60003E28F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929310BB1DC418C60003E28F /* AppDelegate.swift */; };
 		929310BE1DC418C60003E28F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929310BD1DC418C60003E28F /* ViewController.swift */; };
 		929310C31DC418C60003E28F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 929310C21DC418C60003E28F /* Assets.xcassets */; };
 		929310D11DC418C60003E28F /* FamilyManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929310D01DC418C60003E28F /* FamilyManagerTests.swift */; };
 		929310DC1DC418C60003E28F /* FamilyManagerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929310DB1DC418C60003E28F /* FamilyManagerUITests.swift */; };
 		929310EA1DC41AB50003E28F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 929310E91DC41AB50003E28F /* GoogleService-Info.plist */; };
+		929CA7D11DEEB02E00FCA1D0 /* FMNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929CA7D01DEEB02E00FCA1D0 /* FMNotifications.swift */; };
+		929CA7D21DEEB02E00FCA1D0 /* FMNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929CA7D01DEEB02E00FCA1D0 /* FMNotifications.swift */; };
+		929CA7D31DEEB02E00FCA1D0 /* FMNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929CA7D01DEEB02E00FCA1D0 /* FMNotifications.swift */; };
 		92C1A00F1DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1A00E1DED6D9F00DCFA09 /* FMTimerLabel.swift */; };
 		92C1A0101DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1A00E1DED6D9F00DCFA09 /* FMTimerLabel.swift */; };
 		92C1A0111DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1A00E1DED6D9F00DCFA09 /* FMTimerLabel.swift */; };
@@ -71,6 +80,8 @@
 		9263B1071DE95B0F006D0222 /* FMDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabase.swift; sourceTree = "<group>"; };
 		9263B10B1DE9606B006D0222 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		927CAB531DC42AA900D4BDCC /* main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = main.storyboard; sourceTree = "<group>"; };
+		9288CBE81DF3F5A700CBDBE7 /* Colors */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Colors; sourceTree = "<group>"; };
+		9288CBEC1DF3F62400CBDBE7 /* FMColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FMColors.swift; path = ../FMColors.swift; sourceTree = "<group>"; };
 		929310B81DC418C60003E28F /* FamilyManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FamilyManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		929310BB1DC418C60003E28F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		929310BD1DC418C60003E28F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +94,7 @@
 		929310DB1DC418C60003E28F /* FamilyManagerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyManagerUITests.swift; sourceTree = "<group>"; };
 		929310DD1DC418C60003E28F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		929310E91DC41AB50003E28F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		929CA7D01DEEB02E00FCA1D0 /* FMNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMNotifications.swift; sourceTree = "<group>"; };
 		92C1A00E1DED6D9F00DCFA09 /* FMTimerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMTimerLabel.swift; sourceTree = "<group>"; };
 		98753DC1F05B6B24AC1E80CA /* Pods-FamilyManagerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FamilyManagerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FamilyManagerUITests/Pods-FamilyManagerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A4AA80ADB923E5BEA90A6E8B /* Pods_FamilyManagerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FamilyManagerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,6 +178,7 @@
 		929310BA1DC418C60003E28F /* FamilyManager */ = {
 			isa = PBXGroup;
 			children = (
+				9288CBEC1DF3F62400CBDBE7 /* FMColors.swift */,
 				929310E91DC41AB50003E28F /* GoogleService-Info.plist */,
 				929310BB1DC418C60003E28F /* AppDelegate.swift */,
 				929310BD1DC418C60003E28F /* ViewController.swift */,
@@ -178,6 +191,8 @@
 				9263B1071DE95B0F006D0222 /* FMDatabase.swift */,
 				92332A221DEC18E40094D532 /* FMTimerView.swift */,
 				92C1A00E1DED6D9F00DCFA09 /* FMTimerLabel.swift */,
+				929CA7D01DEEB02E00FCA1D0 /* FMNotifications.swift */,
+				9288CBE81DF3F5A700CBDBE7 /* Colors */,
 			);
 			path = FamilyManager;
 			sourceTree = "<group>";
@@ -319,6 +334,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9288CBE91DF3F5A700CBDBE7 /* Colors in Resources */,
 				929310C31DC418C60003E28F /* Assets.xcassets in Resources */,
 				9263B10C1DE9606B006D0222 /* Default-568h@2x.png in Resources */,
 				927CAB541DC42AA900D4BDCC /* main.storyboard in Resources */,
@@ -330,6 +346,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9288CBEA1DF3F5A700CBDBE7 /* Colors in Resources */,
 				927CAB551DC42AA900D4BDCC /* main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,6 +355,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9288CBEB1DF3F5A700CBDBE7 /* Colors in Resources */,
 				927CAB561DC42AA900D4BDCC /* main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -493,6 +511,8 @@
 				92332A231DEC18E40094D532 /* FMTimerView.swift in Sources */,
 				929310BC1DC418C60003E28F /* AppDelegate.swift in Sources */,
 				58A8815373793423BF1B16C3 /* FMFontLabel.swift in Sources */,
+				9288CBED1DF3F62400CBDBE7 /* FMColors.swift in Sources */,
+				929CA7D11DEEB02E00FCA1D0 /* FMNotifications.swift in Sources */,
 				58A8825708C8AF233ED3E7EC /* FMFontButton.swift in Sources */,
 				58A88B3B3C81E0BD94A6BB53 /* FMAddMemberController.swift in Sources */,
 			);
@@ -507,6 +527,8 @@
 				58A88969850DE97BA38286CD /* FMFontButton.swift in Sources */,
 				92C1A0101DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */,
 				92332A241DEC18E40094D532 /* FMTimerView.swift in Sources */,
+				9288CBEE1DF3F62400CBDBE7 /* FMColors.swift in Sources */,
+				929CA7D21DEEB02E00FCA1D0 /* FMNotifications.swift in Sources */,
 				58A88DEC50D06CB4F0CA43B2 /* FMAddMemberController.swift in Sources */,
 				9263B1091DE95B0F006D0222 /* FMDatabase.swift in Sources */,
 			);
@@ -521,6 +543,8 @@
 				58A885608D7B952C4FA1A6E8 /* FMFontButton.swift in Sources */,
 				92C1A0111DED6D9F00DCFA09 /* FMTimerLabel.swift in Sources */,
 				92332A251DEC18E40094D532 /* FMTimerView.swift in Sources */,
+				9288CBEF1DF3F62400CBDBE7 /* FMColors.swift in Sources */,
+				929CA7D31DEEB02E00FCA1D0 /* FMNotifications.swift in Sources */,
 				58A88C6B404F51D00AA5C698 /* FMAddMemberController.swift in Sources */,
 				9263B10A1DE95B0F006D0222 /* FMDatabase.swift in Sources */,
 			);

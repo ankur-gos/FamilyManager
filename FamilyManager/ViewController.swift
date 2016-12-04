@@ -49,7 +49,8 @@ class ViewController: UIViewController {
     func set(_ sender: UITapGestureRecognizer){
         timer.timerOn = true
         timer.progress = 0
-        timer.timer.secondsLeft = 60
+        timer.timer.secondsLeft = 25 * 6 * 60
+        timer.progressMax = CGFloat(25 * 6 * 60)
         timer1 = Timer.scheduledTimer(withTimeInterval: 0.005, repeats: true){tm in
             self.timer.progress = self.timer.progress + 0.01
             self.timer.setNeedsDisplay()
@@ -58,7 +59,7 @@ class ViewController: UIViewController {
             self.timer.updateTimer()
             self.timer.setNeedsDisplay()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.resetTimer), name: NSNotification.Name.init(rawValue: "timerFire"), object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.resetTimer), name: FMNotifications.TimerDone, object: nil)
     }
     
     func resetTimer(){

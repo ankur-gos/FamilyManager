@@ -42,7 +42,7 @@ class FMTimerView: UIView{
     func updateTimer(){
         timer.secondsLeft = timer.secondsLeft - 1
         if timer.secondsLeft == 0{
-             NotificationCenter.default.post(name: NSNotification.Name.init("timerFire"), object: self)
+            NotificationCenter.default.post(name: FMNotifications.TimerDone, object: nil)
         }
     }
     
@@ -62,7 +62,7 @@ class FMTimerView: UIView{
     }
     
     func drawNoTimer(context: CGContext, boundedBy rect: CGRect){
-        context.setFillColor(UIColor.cyan.cgColor)
+        context.setFillColor(UIColor.purple.cgColor)
         context.fill(rect)
     }
     
