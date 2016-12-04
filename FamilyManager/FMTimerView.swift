@@ -67,11 +67,12 @@ class FMTimerView: UIView{
     }
     
     func drawProgress(context: CGContext, boundedBy rect: CGRect, progress: CGFloat) {
-        context.setFillColor(UIColor.red.cgColor)
+        let color = FMColors.darkPurple.cgColor
+        context.setFillColor(color)
         let path = UIBezierPath(arcCenter: CGPoint(x: rect.width / 2, y: rect.height / 2), radius: rect.width / 3, startAngle: 3 * .pi / 2, endAngle: ((progress * 360 / progressMax) * .pi / 180) - (.pi / 2), clockwise: true).cgPath
         let stroked = path.copy(strokingWithWidth: 10, lineCap: .round, lineJoin: .miter, miterLimit: 10)
         context.addPath(stroked)
-        context.setStrokeColor(UIColor.red.cgColor)
+        context.setStrokeColor(color)
         context.drawPath(using: .fillStroke)
         
     }
