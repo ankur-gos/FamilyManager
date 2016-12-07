@@ -56,16 +56,43 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.resume), name: FMNotifications.ResumeApp, object: nil)
     }
     
-    func resume(){}
+    func resolveTimes(timeLeft: Int64, suspendTimestamp: Int64){
+        let currentTimestamp = Int64(NSDate().timeIntervalSince1970)
+        let timeElapsed = currentTimestamp - suspendTimestamp
+        var updatedTime = timeLeft - timeElapsed
+        if updatedTime < 0{
+            updatedTime = 0
+        }
+        timer.progress = timer.progressMax - CGFloat(updatedTime)
+        timer.timer.secondsLeft = Int(updatedTime)
+    }
+    
+    func resume(){
+        NotificationCenter.default.removeObserver(self)
+        do{
+            let (leftOp, suspendOp) = try FMDB().getBreastTimer()
+            guard let timeLeft = leftOp, let suspendTime = suspendOp else{
+                return
+            }
+            setTimer()
+            resolveTimes(timeLeft: timeLeft, suspendTimestamp: suspendTime)
+        } catch{
+            return
+        }
+    }
     
     func set(_ sender: UITapGestureRecognizer){
+        setTimer()
+    }
+    
+    func setTimer(){
         resetTimer()
         timer.timerOn = true
         timer.progress = 0
         timer.timer.secondsLeft = 25 * 6 * 60
         timer.progressMax = CGFloat(25 * 6 * 60)
-        timer1 = Timer.scheduledTimer(withTimeInterval: 0.005, repeats: true){tm in
-            self.timer.progress = self.timer.progress + 0.01
+        timer1 = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){tm in
+            self.timer.progress = self.timer.progress + 1
             self.timer.setNeedsDisplay()
         }
         timer2 = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){tm in
