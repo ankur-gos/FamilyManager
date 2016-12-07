@@ -46,6 +46,18 @@ class ViewController: UIViewController {
         
     }
     
+    func suspend(){
+        let timeLeft = Int64(timer.timer.secondsLeft)
+        let suspendTime: Int64 = Int64(NSDate().timeIntervalSince1970)
+        resetTimer()
+        do{
+            try FMDB().updateBreastTimer(timeLeft: timeLeft, suspendTime: suspendTime)
+        } catch{}
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.resume), name: FMNotifications.ResumeApp, object: nil)
+    }
+    
+    func resume(){}
+    
     func set(_ sender: UITapGestureRecognizer){
         resetTimer()
         timer.timerOn = true
@@ -61,6 +73,7 @@ class ViewController: UIViewController {
             self.timer.setNeedsDisplay()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(self.resetTimer), name: FMNotifications.TimerDone, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.suspend), name: FMNotifications.SuspendApp, object: nil)
     }
     
     func resetTimer(){

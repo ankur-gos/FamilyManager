@@ -25,6 +25,8 @@ enum DMError: Error{
 struct FMDB: FMDatabase{
     var db: Connection?
     let numberFamilyMembers = Expression<Int64>("numberFamilyMembers")
+    let breastTimeLeft = Expression<Int64?>("breastTimeLeft")
+    let suspendTimestamp = Expression<Int64?>("suspendTimestamp")
     let users = Table("users")
     
     init(){
@@ -53,10 +55,23 @@ struct FMDB: FMDatabase{
             try db.run(users.create { t in
                 t.column(id, primaryKey: true)
                 t.column(numberFamilyMembers)
+                t.column(breastTimeLeft)
+                t.column(suspendTimestamp)
             })
             try insertUser()
         } catch(let e){
             throw e
+        }
+    }
+    
+    func getUser() throws -> Row{
+        guard let db = db else{
+            throw DMError.NoConnection
+        }
+        if let user = try db.pluck(users){
+            return user
+        } else{
+            throw DMError.NoUser
         }
     }
     
@@ -87,6 +102,19 @@ struct FMDB: FMDatabase{
             return user[numberFamilyMembers]
         } else{
             throw DMError.NoUser
+        }
+    }
+    
+    func updateBreastTimer(timeLeft: Int64, suspendTime: Int64) throws{
+        let _ = try db?.run(users.update([breastTimeLeft <- timeLeft, suspendTimestamp <- suspendTime]))
+    }
+    
+    func getBreastTimer() throws -> (Int64?, Int64?){
+        do{
+            let user = try getUser()
+            return (user[breastTimeLeft], user[suspendTimestamp])
+        } catch(let e){
+            throw e
         }
     }
 }

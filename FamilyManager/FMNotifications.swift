@@ -14,4 +14,16 @@ struct FMNotifications{
             return Notification.Name(rawValue: "TimerDone")
         }
     }
+    
+    static var SuspendApp: Notification.Name{
+        get{
+            return Notification.Name(rawValue: "SuspendApp")
+        }
+    }
+    
+    static var ResumeApp: Notification.Name{
+        get{
+            return Notification.Name(rawValue: "ResumeApp")
+        }
+    }
 }
