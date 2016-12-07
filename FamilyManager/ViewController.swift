@@ -47,6 +47,7 @@ class ViewController: UIViewController {
     }
     
     func set(_ sender: UITapGestureRecognizer){
+        resetTimer()
         timer.timerOn = true
         timer.progress = 0
         timer.timer.secondsLeft = 25 * 6 * 60
