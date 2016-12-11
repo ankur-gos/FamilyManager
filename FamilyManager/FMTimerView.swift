@@ -18,7 +18,11 @@ class FMTimerView: UIView{
     var progress: CGFloat = 0
     var progressMax: CGFloat = 100
     var timer = FMTimerLabel()
-    var timerOn = false
+    var timerOn = false{
+        didSet{
+            self.setNeedsDisplay()
+        }
+    }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!

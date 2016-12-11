@@ -14,6 +14,8 @@ class ViewController: UIViewController {
 
     lazy var familyCountLabel = UILabel()
     lazy var timer = FMTimerView(backgroundColor: UIColor.white, timeSet: 60)
+    lazy var repeatSwitch = UISwitch()
+    lazy var repeatLabel = UILabel()
     
     let FCHEIGHT: CGFloat = 50
     let FCWIDTH: CGFloat = 200
@@ -39,11 +41,41 @@ class ViewController: UIViewController {
             make.width.equalTo(200)
             make.center.equalTo(view)
         }
+        addSwitch()
         timer.progressMax = 60
         addNavBar()
         addToolbar()
         timer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.set)))
+        FMNotificationManager.requestPermissions()
+    }
+    
+    func addSwitch(){
+        view.addSubview(repeatSwitch)
+        repeatSwitch.snp.makeConstraints{ make in
+            make.height.equalTo(40)
+            make.top.equalTo(timer.snp.bottom).offset(20)
+            make.centerX.equalTo(timer.snp.centerX)
+        }
+        view.addSubview(repeatLabel)
+        repeatLabel.snp.makeConstraints{ make in
+            make.height.equalTo(40)
+            make.centerY.equalTo(repeatSwitch.snp.centerY)
+            make.right.equalTo(repeatSwitch.snp.left).offset(-8)
+        }
+        repeatLabel.text = "Repeat:"
         
+        repeatSwitch.addTarget(self, action: #selector(ViewController.repeatTimer), for: UIControlEvents.valueChanged)
+        do{
+            repeatSwitch.isOn = try FMDB().getRepeatBreastTimer()
+        } catch{
+            repeatSwitch.isOn = false
+        }
+    }
+    
+    func repeatTimer(){
+        do{
+            try FMDB().setRepeatBreastTimer(rep: repeatSwitch.isOn)
+        } catch{}
     }
     
     func suspend(){
@@ -65,6 +97,9 @@ class ViewController: UIViewController {
         }
         timer.progress = timer.progressMax - CGFloat(updatedTime)
         timer.timer.secondsLeft = Int(updatedTime)
+        if timer.timer.secondsLeft == 0{
+            resetTimer()
+        }
     }
     
     func resume(){
@@ -82,11 +117,17 @@ class ViewController: UIViewController {
     }
     
     func set(_ sender: UITapGestureRecognizer){
+        if !timer.timerOn{
+            setAndNotify()
+        }
+    }
+    
+    func setAndNotify(){
         setTimer()
+        FMNotificationManager.scheduleLocalNotification()
     }
     
     func setTimer(){
-        resetTimer()
         timer.timerOn = true
         timer.progress = 0
         timer.timer.secondsLeft = 25 * 6 * 60
@@ -112,6 +153,9 @@ class ViewController: UIViewController {
         }
         timer.timerOn = false
         NotificationCenter.default.removeObserver(self)
+        if(repeatSwitch.isOn){
+            setAndNotify()
+        }
     }
     
     func addToolbar(){

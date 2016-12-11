@@ -35,6 +35,7 @@ struct FMDB: FMDatabase{
     let numberFamilyMembers = Expression<Int64>("numberFamilyMembers")
     let breastTimeLeft = Expression<Int64?>("breastTimeLeft")
     let suspendTimestamp = Expression<Int64?>("suspendTimestamp")
+    let repeatBreastTimer = Expression<Int64?>("repeatBreastTimer")
     let users = Table("users")
     
     init(){
@@ -65,6 +66,7 @@ struct FMDB: FMDatabase{
                     t.column(numberFamilyMembers)
                     t.column(breastTimeLeft)
                     t.column(suspendTimestamp)
+                    t.column(repeatBreastTimer)
                 })
                 
                 try insertUser()
@@ -72,6 +74,9 @@ struct FMDB: FMDatabase{
                 throw e
             }
             db.userVersion = 1
+        } else if db.userVersion == 1{
+            try db.run(users.addColumn(repeatBreastTimer))
+            db.userVersion = 2
         }
     }
     
@@ -129,12 +134,24 @@ struct FMDB: FMDatabase{
         let _ = try db?.run(users.update([breastTimeLeft <- timeLeft, suspendTimestamp <- suspendTime]))
     }
     
-    func getBreastTimer() throws -> (Int64?, Int64?){
-        do{
-            let user = try getUser()
-            return (user[breastTimeLeft], user[suspendTimestamp])
-        } catch let e{
-            throw e
+    func setRepeatBreastTimer(rep: Bool) throws{
+        var val: Int64? = nil
+        if rep{
+            val = 1
         }
+        let _ = try db?.run(users.update(repeatBreastTimer <- val))
+    }
+    
+    func getRepeatBreastTimer() throws -> Bool{
+        let user = try getUser()
+        if let _ = user[repeatBreastTimer]{
+            return true
+        }
+        return false
+    }
+    
+    func getBreastTimer() throws -> (Int64?, Int64?){
+        let user = try getUser()
+        return (user[breastTimeLeft], user[suspendTimestamp])
     }
 }
