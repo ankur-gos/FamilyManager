@@ -13,35 +13,45 @@ import FontAwesome_swift
 class ViewController: UIViewController {
 
     lazy var familyCountLabel = UILabel()
-    lazy var timer = FMTimerView(backgroundColor: UIColor.white, timeSet: 60)
+    lazy var breastTimer = FMTimerView(backgroundColor: UIColor.white, timeSet: 60)
     lazy var resetBreast = UIButton()
     lazy var repeatSwitch = UISwitch()
     lazy var repeatLabel = UILabel()
+    lazy var poopTimer = FMTimerView(backgroundColor: UIColor.white, timeSet: 60)
     
     let FCHEIGHT: CGFloat = 50
     let FCWIDTH: CGFloat = 200
     let ABUTTONWIDTH: CGFloat = 60
 
     var familyCount = 0
-    var timer1: Timer?
-    var timer2: Timer?
+    
+    class Timers{
+        init(){
+            timer1 = nil
+            timer2 = nil
+        }
+        var timer1: Timer?
+        var timer2: Timer?
+    }
+    
+    var breastTimers = Timers()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(timer)
-        timer.snp.makeConstraints{ (make) -> Void in
+        view.addSubview(breastTimer)
+        breastTimer.snp.makeConstraints{ (make) -> Void in
             make.height.equalTo(150)
             make.width.equalTo(150)
             make.top.equalTo(view.snp.topMargin).offset(80)
             make.centerX.equalTo(view.snp.centerX)
         }
         addSwitch()
-        timer.progressMax = 60
+        breastTimer.progressMax = 60
         addNavBar()
         addToolbar()
         addResetBreast()
-        timer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.set)))
+        breastTimer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.set)))
         FMNotificationManager.requestPermissions()
     }
     
@@ -49,8 +59,8 @@ class ViewController: UIViewController {
         view.addSubview(repeatSwitch)
         repeatSwitch.snp.makeConstraints{ make in
             make.height.equalTo(40)
-            make.top.equalTo(timer.snp.bottom).offset(20)
-            make.left.equalTo(timer.snp.centerX)
+            make.top.equalTo(breastTimer.snp.bottom).offset(20)
+            make.left.equalTo(breastTimer.snp.centerX)
         }
         view.addSubview(repeatLabel)
         repeatLabel.snp.makeConstraints{ make in
@@ -81,7 +91,7 @@ class ViewController: UIViewController {
     }
     
     func reset(){
-        resetTimer(shouldRepeat: false)
+        resetTimer(timer: breastTimer, timers: breastTimers, shouldRepeat: false)
     }
     
     func repeatTimer(){
@@ -91,10 +101,10 @@ class ViewController: UIViewController {
     }
     
     func suspend(){
-        let timeLeft = Int64(timer.timer.secondsLeft)
+        let timeLeft = Int64(breastTimer.timer.secondsLeft)
         let suspendTime: Int64 = Int64(NSDate().timeIntervalSince1970)
-        resetTimer(timerOn: true)
-        timer.timerOn = true
+        resetTimer(timer: breastTimer, timers: breastTimers, timerOn: true)
+        breastTimer.timerOn = true
         do{
             try FMDB().updateBreastTimer(timeLeft: timeLeft, suspendTime: suspendTime)
         } catch{}
@@ -108,10 +118,10 @@ class ViewController: UIViewController {
         if updatedTime < 0{
             updatedTime = 0
         }
-        timer.progress = timer.progressMax - CGFloat(updatedTime)
-        timer.timer.secondsLeft = Int(updatedTime)
-        if timer.timer.secondsLeft == 0{
-            resetTimer()
+        breastTimer.progress = breastTimer.progressMax - CGFloat(updatedTime)
+        breastTimer.timer.secondsLeft = Int(updatedTime)
+        if breastTimer.timer.secondsLeft == 0{
+            resetTimer(timer: breastTimer, timers: breastTimers)
         }
     }
     
@@ -122,7 +132,7 @@ class ViewController: UIViewController {
             guard let timeLeft = leftOp, let suspendTime = suspendOp else{
                 return
             }
-            setTimer()
+            setTimer(timer: breastTimer, timers: breastTimers)
             resolveTimes(timeLeft: timeLeft, suspendTimestamp: suspendTime)
         } catch{
             return
@@ -130,38 +140,42 @@ class ViewController: UIViewController {
     }
     
     func set(_ sender: UITapGestureRecognizer){
-        if !timer.timerOn{
+        if !breastTimer.timerOn{
             setAndNotify()
         }
     }
     
     func setAndNotify(){
-        setTimer()
+        setTimer(timer: breastTimer, timers: breastTimers)
         FMNotificationManager.scheduleLocalNotification()
     }
     
-    func setTimer(){
+    func setTimer(timer: FMTimerView, timers: Timers){
         timer.timerOn = true
         timer.progress = 0
         timer.timer.secondsLeft = 25 * 6 * 60
         timer.progressMax = CGFloat(25 * 6 * 60)
-        timer1 = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){tm in
-            self.timer.progress = self.timer.progress + 1
-            self.timer.setNeedsDisplay()
+        timers.timer1 = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){tm in
+            self.breastTimer.progress = self.breastTimer.progress + 1
+            self.breastTimer.setNeedsDisplay()
         }
-        timer2 = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){tm in
-            self.timer.updateTimer()
-            self.timer.setNeedsDisplay()
+        timers.timer2 = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){tm in
+            self.breastTimer.updateTimer()
+            self.breastTimer.setNeedsDisplay()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.resetTimer), name: FMNotifications.TimerDone, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.shouldResetBreastTimer), name: FMNotifications.TimerDone, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.suspend), name: FMNotifications.SuspendApp, object: nil)
     }
     
-    func resetTimer(timerOn: Bool = false, shouldRepeat: Bool = true){
-        if let timer1 = timer1{
+    func shouldResetBreastTimer(){
+        resetTimer(timer: breastTimer, timers: breastTimers)
+    }
+    
+    func resetTimer(timer: FMTimerView, timers: Timers, timerOn: Bool = false, shouldRepeat: Bool = true){
+        if let timer1 = timers.timer1{
             timer1.invalidate()
         }
-        if let timer2 = timer2{
+        if let timer2 = timers.timer2{
             timer2.invalidate()
         }
         timer.timerOn = false
