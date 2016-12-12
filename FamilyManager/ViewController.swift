@@ -14,6 +14,7 @@ class ViewController: UIViewController {
 
     lazy var familyCountLabel = UILabel()
     lazy var timer = FMTimerView(backgroundColor: UIColor.white, timeSet: 60)
+    lazy var resetBreast = UIButton()
     lazy var repeatSwitch = UISwitch()
     lazy var repeatLabel = UILabel()
     
@@ -39,6 +40,7 @@ class ViewController: UIViewController {
         timer.progressMax = 60
         addNavBar()
         addToolbar()
+        addResetBreast()
         timer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.set)))
         FMNotificationManager.requestPermissions()
     }
@@ -64,6 +66,22 @@ class ViewController: UIViewController {
         } catch{
             repeatSwitch.isOn = false
         }
+    }
+    
+    func addResetBreast(){
+        view.addSubview(resetBreast)
+        resetBreast.snp.makeConstraints{ make in
+            make.height.equalTo(20)
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(repeatSwitch.snp.bottom).offset(8)
+        }
+        resetBreast.setTitleColor(UIColor.purple, for: .normal)
+        resetBreast.setTitle("Stop Timer", for: .normal)
+        resetBreast.addTarget(self, action: #selector(ViewController.reset), for: .touchUpInside)
+    }
+    
+    func reset(){
+        resetTimer(shouldRepeat: false)
     }
     
     func repeatTimer(){
@@ -139,7 +157,7 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.suspend), name: FMNotifications.SuspendApp, object: nil)
     }
     
-    func resetTimer(timerOn: Bool = false){
+    func resetTimer(timerOn: Bool = false, shouldRepeat: Bool = true){
         if let timer1 = timer1{
             timer1.invalidate()
         }
@@ -148,8 +166,10 @@ class ViewController: UIViewController {
         }
         timer.timerOn = false
         NotificationCenter.default.removeObserver(self)
-        if(repeatSwitch.isOn){
-            setAndNotify()
+        if shouldRepeat{
+            if(repeatSwitch.isOn){
+                setAndNotify()
+            }
         }
     }
     
@@ -162,7 +182,7 @@ class ViewController: UIViewController {
         let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: view.frame.size.width, height: 44))
         navigationBar.backgroundColor = UIColor.blue
         let title = UINavigationItem()
-        title.title = "Family Manager"
+        title.title = "Baby Manager"
         navigationBar.items = [title]
         view.addSubview(navigationBar)
     }
