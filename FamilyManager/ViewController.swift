@@ -35,6 +35,7 @@ class ViewController: UIViewController {
     }
     
     var breastTimers = Timers()
+    var poopTimers = Timers()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +53,19 @@ class ViewController: UIViewController {
         addToolbar()
         addResetBreast()
         breastTimer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.set)))
+        addPoopTimer()
         FMNotificationManager.requestPermissions()
+    }
+    
+    func addPoopTimer(){
+        view.addSubview(poopTimer)
+        poopTimer.snp.makeConstraints{ (make) -> Void in
+            make.height.equalTo(150)
+            make.width.equalTo(150)
+            make.top.equalTo(resetBreast.snp.bottom).offset(8)
+            make.centerX.equalTo(view)
+        }
+        poopTimer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ViewController.set)))
     }
     
     func addSwitch(){
@@ -140,13 +153,23 @@ class ViewController: UIViewController {
     }
     
     func set(_ sender: UITapGestureRecognizer){
-        if !breastTimer.timerOn{
-            setAndNotify()
+        if sender.view == breastTimer{
+            if !breastTimer.timerOn{
+                setAndNotify(timer: breastTimer, timers: breastTimers)
+            }
+            return
+        }
+        
+        if sender.view == poopTimer{
+            if !poopTimer.timerOn{
+                setAndNotify(timer: poopTimer, timers: poopTimers)
+            }
+            return
         }
     }
     
-    func setAndNotify(){
-        setTimer(timer: breastTimer, timers: breastTimers)
+    func setAndNotify(timer: FMTimerView, timers: Timers){
+        setTimer(timer: timer, timers: timers)
         FMNotificationManager.scheduleLocalNotification()
     }
     
@@ -163,8 +186,16 @@ class ViewController: UIViewController {
             self.breastTimer.updateTimer()
             self.breastTimer.setNeedsDisplay()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.shouldResetBreastTimer), name: FMNotifications.TimerDone, object: nil)
+        if timer == breastTimer{
+            NotificationCenter.default.addObserver(self, selector: #selector(self.shouldResetBreastTimer), name: FMNotifications.BreastTimerDone, object: nil)
+        } else if timer == poopTimer{
+            NotificationCenter.default.addObserver(self, selector: #selector(self.shouldResetPoopTimer), name: FMNotifications.PoopTimerDone, object: nil)
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.suspend), name: FMNotifications.SuspendApp, object: nil)
+    }
+    
+    func shouldResetPoopTimer(){
+        resetTimer(timer: poopTimer, timers: poopTimers)
     }
     
     func shouldResetBreastTimer(){
