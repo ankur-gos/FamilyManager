@@ -28,18 +28,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(familyCountLabel)
-        familyCountLabel.text = "Family Members: \(getCount())"
-        familyCountLabel.snp.makeConstraints{ (make) -> Void in
-            make.height.equalTo(FCHEIGHT)
-            make.width.equalTo(FCWIDTH)
-            make.center.equalTo(view)
-        }
         view.addSubview(timer)
         timer.snp.makeConstraints{ (make) -> Void in
-            make.height.equalTo(200)
-            make.width.equalTo(200)
-            make.center.equalTo(view)
+            make.height.equalTo(150)
+            make.width.equalTo(150)
+            make.top.equalTo(view.snp.topMargin).offset(80)
+            make.centerX.equalTo(view.snp.centerX)
         }
         addSwitch()
         timer.progressMax = 60
@@ -54,7 +48,7 @@ class ViewController: UIViewController {
         repeatSwitch.snp.makeConstraints{ make in
             make.height.equalTo(40)
             make.top.equalTo(timer.snp.bottom).offset(20)
-            make.centerX.equalTo(timer.snp.centerX)
+            make.left.equalTo(timer.snp.centerX)
         }
         view.addSubview(repeatLabel)
         repeatLabel.snp.makeConstraints{ make in
@@ -81,7 +75,8 @@ class ViewController: UIViewController {
     func suspend(){
         let timeLeft = Int64(timer.timer.secondsLeft)
         let suspendTime: Int64 = Int64(NSDate().timeIntervalSince1970)
-        resetTimer()
+        resetTimer(timerOn: true)
+        timer.timerOn = true
         do{
             try FMDB().updateBreastTimer(timeLeft: timeLeft, suspendTime: suspendTime)
         } catch{}
@@ -144,7 +139,7 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.suspend), name: FMNotifications.SuspendApp, object: nil)
     }
     
-    func resetTimer(){
+    func resetTimer(timerOn: Bool = false){
         if let timer1 = timer1{
             timer1.invalidate()
         }
@@ -168,40 +163,7 @@ class ViewController: UIViewController {
         navigationBar.backgroundColor = UIColor.blue
         let title = UINavigationItem()
         title.title = "Family Manager"
-        let addFamilyMember = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(ViewController.addFamilyMember))
-        title.rightBarButtonItem = addFamilyMember
         navigationBar.items = [title]
         view.addSubview(navigationBar)
-    }
-
-    func addFamilyMember(){
-        showModal()
-        updateCount()
-        familyCountLabel.text = "Family Members: \(getCount())"
-    }
-    
-    func getCount() -> Int64{
-        let db = FMDB()
-        do{
-            return try db.getFamilyMemberCount()
-        } catch{
-            print("Get family member count failed")
-        }
-        return 0
-    }
-    
-    func updateCount(){
-        let db = FMDB()
-        do{
-            try db.updateFamilyMemberCount()
-        } catch{
-            print("Failed to update family member count")
-        }
-    }
-
-    func showModal(){
-        let vc = FMAddMemberController()
-        vc.modalPresentationStyle = .overCurrentContext
-        present(vc, animated: false)
     }
 }

@@ -13,6 +13,7 @@ protocol FMDrawTimer{
     func drawProgress(context: CGContext, boundedBy rect: CGRect, progress: CGFloat)
 }
 
+
 class FMTimerView: UIView{
     
     var progress: CGFloat = 0
@@ -24,6 +25,8 @@ class FMTimerView: UIView{
         }
     }
     
+    var widthConstraint: Constraint?
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
@@ -34,6 +37,7 @@ class FMTimerView: UIView{
         timer.snp.makeConstraints{(make) -> Void in
             make.height.equalTo(40)
             make.center.equalTo(self)
+            self.widthConstraint = make.width.equalTo(self.snp.width).offset(-20).constraint
         }
     }
     
@@ -56,10 +60,16 @@ class FMTimerView: UIView{
             if timerOn{
                 drawProgress(context: context, boundedBy: rect, progress: progress)
                 timer.textColor = UIColor.black
+                if let constraint = widthConstraint{
+                    constraint.deactivate()
+                }
             } else{
                 drawNoTimer(context: context, boundedBy: rect)
                 timer.text = "Tap to set feeding timer"
                 timer.textColor = UIColor.white
+                if let constraint = widthConstraint{
+                    constraint.activate()
+                }
             }
         }
         super.draw(rect)
@@ -67,7 +77,8 @@ class FMTimerView: UIView{
     
     func drawNoTimer(context: CGContext, boundedBy rect: CGRect){
         context.setFillColor(UIColor.purple.cgColor)
-        context.fill(rect)
+        context.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: rect.height / 2, startAngle: 0, endAngle: 2 * .pi, clockwise: true)
+        context.drawPath(using: .fill)
     }
     
     func drawProgress(context: CGContext, boundedBy rect: CGRect, progress: CGFloat) {

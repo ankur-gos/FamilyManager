@@ -9,6 +9,16 @@
 import UIKit
 
 class FMTimerLabel: UILabel {
+    
+    override init(frame: CGRect){
+        super.init(frame: frame)
+        adjustsFontSizeToFitWidth = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     var secondsLeft: Int = 60{
         didSet{
             let hours:   Int = secondsLeft / 3600

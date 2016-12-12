@@ -1,6 +1,6 @@
 TODO List
 
-1. Make start timer button circular
-3. Change font
-4. Customize Timer settings
-5. Pooping timer
+- Change font
+- Customize Timer settings
+- Pooping timer
+- If the user force quits the app, it should not reset the timer
