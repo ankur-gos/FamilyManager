@@ -23,7 +23,7 @@ struct FMNotificationManager{
                 // TODO define this behavior
                 return
             }
-            if let error = error{
+            if let _ = error{
                 // TODO error handling
             }
             FMNotificationManager.permissionGranted = true

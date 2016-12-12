@@ -9,9 +9,15 @@
 import Foundation
 
 struct FMNotifications{
-    static var TimerDone: Notification.Name{
+    static var BreastTimerDone: Notification.Name{
         get{
-            return Notification.Name(rawValue: "TimerDone")
+            return Notification.Name(rawValue: "BreastTimerDone")
+        }
+    }
+    
+    static var PoopTimerDone: Notification.Name{
+        get{
+            return Notification.Name(rawValue: "PoopTimerDone")
         }
     }
     

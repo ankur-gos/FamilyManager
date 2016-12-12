@@ -179,12 +179,12 @@ class ViewController: UIViewController {
         timer.timer.secondsLeft = 25 * 6 * 60
         timer.progressMax = CGFloat(25 * 6 * 60)
         timers.timer1 = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){tm in
-            self.breastTimer.progress = self.breastTimer.progress + 1
-            self.breastTimer.setNeedsDisplay()
+            timer.progress = self.breastTimer.progress + 1
+            timer.setNeedsDisplay()
         }
         timers.timer2 = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){tm in
-            self.breastTimer.updateTimer()
-            self.breastTimer.setNeedsDisplay()
+            timer.updateTimer()
+            timer.setNeedsDisplay()
         }
         if timer == breastTimer{
             NotificationCenter.default.addObserver(self, selector: #selector(self.shouldResetBreastTimer), name: FMNotifications.BreastTimerDone, object: nil)
@@ -213,7 +213,7 @@ class ViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
         if shouldRepeat{
             if(repeatSwitch.isOn){
-                setAndNotify()
+                setAndNotify(timer: timer, timers: timers)
             }
         }
     }

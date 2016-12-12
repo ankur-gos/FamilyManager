@@ -16,6 +16,8 @@ protocol FMDrawTimer{
 
 class FMTimerView: UIView{
     
+    var id = ""
+    
     var progress: CGFloat = 0
     var progressMax: CGFloat = 100
     var timer = FMTimerLabel()
@@ -50,7 +52,11 @@ class FMTimerView: UIView{
     func updateTimer(){
         timer.secondsLeft = timer.secondsLeft - 1
         if timer.secondsLeft == 0{
-            NotificationCenter.default.post(name: FMNotifications.TimerDone, object: nil)
+            if id == "breast"{
+                NotificationCenter.default.post(name: FMNotifications.BreastTimerDone, object: nil)
+            } else if id == "poop"{
+                NotificationCenter.default.post(name: FMNotifications.PoopTimerDone, object: nil)
+            }
         }
     }
     
